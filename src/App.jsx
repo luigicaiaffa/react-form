@@ -17,6 +17,11 @@ function App() {
     setArticlesData(articleList);
   };
 
+  const deleteArticle = (id) => {
+    const updatedList = articlesData.filter((article, i) => i !== id);
+    setArticlesData(updatedList);
+  };
+
   return (
     <>
       <header>
@@ -48,7 +53,17 @@ function App() {
               {articlesData.map((article, i) => {
                 return (
                   <li key={i} className="list-group-item">
-                    {article.title}
+                    <div className="d-flex justify-content-between">
+                      <div>{article.title}</div>
+                      <div>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => deleteArticle(i)}
+                        >
+                          <i className="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
                   </li>
                 );
               })}
