@@ -28,6 +28,14 @@ function App() {
     setArticlesData(updatedList);
   };
 
+  const modifyArticle = (id) => {
+    const updatedList = [...articlesData];
+    newArticleTitle && newArticleAuthor
+      ? (updatedList[id] = { title: newArticleTitle, author: newArticleAuthor })
+      : alert("Nessun valore inserito");
+    setArticlesData(updatedList);
+  };
+
   return (
     <>
       <header>
@@ -36,42 +44,42 @@ function App() {
 
       <main>
         <div className="container">
-          <h2 className="fs-5 px-4">Inserisci i dati del nuovo articolo</h2>
-          <form className="px-4 py-3" onSubmit={handleFormSubmit}>
-            {/* Title input */}
-            <div className="mb-3">
-              <input
-                required
-                type="text"
-                className="form-control"
-                id="titleArticle"
-                placeholder="Titolo Articolo"
-                value={newArticleTitle}
-                onChange={handleInputTitleChange}
-              />
-            </div>
+          <div className="px-4">
+            <h2 className="fs-5 ">Inserisci i dati dell'articolo</h2>
+            <form className=" py-3" onSubmit={handleFormSubmit}>
+              {/* Title input */}
+              <div className="mb-3">
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  placeholder="Titolo Articolo"
+                  value={newArticleTitle}
+                  onChange={handleInputTitleChange}
+                />
+              </div>
 
-            {/* Author input */}
-            <div className="mb-3">
-              <input
-                required
-                type="text"
-                className="form-control"
-                id="authorArticle"
-                placeholder="Autore"
-                value={newArticleAuthor}
-                onChange={handleInputAuthorChange}
-              />
-            </div>
+              {/* Author input */}
+              <div className="mb-3">
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  placeholder="Autore"
+                  value={newArticleAuthor}
+                  onChange={handleInputAuthorChange}
+                />
+              </div>
 
-            {/* Submit button */}
-            <button type="submit" className="btn btn-success">
-              <i className="fa-solid fa-plus fa-xl"></i>
-            </button>
-          </form>
+              {/* Submit button */}
+              <button type="submit" className="btn btn-success">
+                <i className="fa-solid fa-plus fa-xl"></i>
+              </button>
+            </form>
+          </div>
 
           {/* Articles list */}
-          <div className="p-4">
+          <div className="px-4">
             <ul className="list-group">
               {articlesData.map((article, i) => {
                 return (
@@ -84,7 +92,10 @@ function App() {
                         </span>
                       </div>
                       <div>
-                        <button className="btn btn-warning mx-1">
+                        <button
+                          className="btn btn-warning mx-1"
+                          onClick={() => modifyArticle(i)}
+                        >
                           <i className="fa-solid fa-pencil"></i>
                         </button>
                         <button
@@ -100,6 +111,13 @@ function App() {
               })}
             </ul>
           </div>
+
+          {articlesData.length > 0 && (
+            <div className="form-text px-4 m-2">
+              modificare un articolo: inserire i nuovi dati nel form e cliccare
+              sul bottone di modifica dell'articolo interessato
+            </div>
+          )}
         </div>
       </main>
     </>
