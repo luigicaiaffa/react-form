@@ -2,6 +2,21 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
+  const [newArticle, setNewArticle] = useState("Titolo Articolo");
+  const [articlesData, setArticlesData] = useState([]);
+
+  const handleInputChange = (e) => {
+    setNewArticle(e.target.value);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    const articleList = [...articlesData];
+    articleList.push({ title: newArticle });
+    setArticlesData(articleList);
+  };
+
   return (
     <>
       <header>
@@ -10,12 +25,18 @@ function App() {
 
       <main>
         <div className="container">
-          <form className="p-4">
-            <div class="mb-3">
-              <label for="newArticle" className="form-label">
+          <form className="p-4" onSubmit={handleFormSubmit}>
+            <div className="mb-3">
+              <label htmlFor="newArticle" className="form-label">
                 Inserisci nuovo articolo
               </label>
-              <input type="text" className="form-control" id="newArticle" />
+              <input
+                type="text"
+                className="form-control"
+                id="newArticle"
+                value={newArticle}
+                onChange={handleInputChange}
+              />
             </div>
             <button type="submit" className="btn btn-success">
               <i className="fa-solid fa-plus fa-xl"></i>
@@ -24,7 +45,13 @@ function App() {
 
           <div className="p-4">
             <ul className="list-group">
-              <li className="list-group-item">Nuovo Articolo</li>
+              {articlesData.map((article, i) => {
+                return (
+                  <li key={i} className="list-group-item">
+                    {article.title}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
